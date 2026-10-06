@@ -42,6 +42,31 @@ This public repository is a technical demonstrator. IBRAMIND offers paid pilots 
 
 The private IBRAMIND production platform, customer procurement data, proprietary enterprise workflows, production credentials, and live tender decisions are not included here.
 
+## 30-second demo
+
+Run the bundled synthetic tender:
+
+```bash
+./run_demo.sh
+```
+
+The fixture contains four requirements. Bid-security evidence is intentionally missing while registration, methodology, and experience evidence are present. The demo is designed to surface the unresolved mandatory requirement instead of inventing evidence or autonomously finalizing an award decision.
+
+```mermaid
+flowchart LR
+    A[Tender requirements] --> B[Evidence matching]
+    B --> C[Compliance matrix]
+    C --> D[Risk summary]
+    D --> E[Draft evidence pack]
+    E --> F[Human approval gate]
+```
+
+## Where this becomes commercial
+
+Typical paid-pilot scopes include a defined tender package, document set, evaluation workflow, compliance rules, evidence provenance requirements, and human approval controls. Success is measured with observable criteria such as requirement coverage, evidence traceability, unresolved-risk detection, auditability, reviewer usefulness, and workflow fit.
+
+See [PILOT.md](PILOT.md) for a sample engagement structure.
+
 ## Target users
 
 Public-procurement teams, evaluation committees, contractors, consultants, infrastructure owners, auditors, and institutional procurement organizations.
