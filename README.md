@@ -1,38 +1,87 @@
 # IBRAMIND BidBox Agent
 
-Challenge-specific Governance / **Bid Box** agent for the African Agentic AI Design Challenge.
+**Auditable tender-compliance intelligence with a mandatory human approval boundary.**
 
-## Problem statement
-African procurement teams often review tender requirements, BOQs, supplier evidence and technical schedules manually across disconnected files. Mandatory requirements can be missed, evidence can be difficult to trace, and evaluation working files can be inconsistent or slow to assemble.
+IBRAMIND BidBox Agent is a public challenge-specific prototype for the African Agentic AI Design Challenge. It converts synthetic/open tender requirements and evidence into an auditable compliance working file while preserving provenance and blocking finalization until a human reviewer approves it.
 
-## Solution overview
-IBRAMIND BidBox Agent prepares an auditable tender-evaluation working file from **synthetic/open data**. It matches requirements to evidence, flags unresolved compliance risk, preserves provenance, and blocks finalization until a human reviewer approves it. It **does not award a tender or choose a bidder**.
+> This repository is a public technical showcase. It does not contain the private IBRAMIND production platform, customer procurement data, production credentials, proprietary enterprise workflows, or live tender decisions.
+
+## Problem
+
+Procurement and engineering teams often review tender requirements, BOQs, supplier evidence, and technical schedules across disconnected files. Mandatory requirements can be missed, provenance can be difficult to trace, and evaluation working files can become inconsistent.
+
+## What BidBox demonstrates
+
+- Requirement → evidence matching
+- Compliance matrix generation
+- Unresolved-risk flagging
+- Evidence provenance
+- Draft evaluation evidence packs
+- MCP JSON-RPC tools over stdio
+- Bounded multi-step agent orchestration
+- Human-in-the-loop finalization
+- Synthetic/open data only
+
+The prototype **does not award a tender or choose a bidder**.
+
+## Commercial use / paid pilots
+
+The public repo is the demonstrator. IBRAMIND can provide paid pilots and enterprise deployments for tender review, compliance matrices, BOQ/document extraction, procurement evidence, auditability, integrations, and governed agent workflows.
+
+**Request a paid pilot:** https://ibramind.com  
+**Founder / partnership contact:** founder@ibramind.com
+
+See [COMMERCIAL.md](COMMERCIAL.md) for the commercial boundary.
 
 ## Target users
-Public-procurement officers, evaluation committees, technical consultants, infrastructure owners, auditors and institutional procurement teams.
+
+Public-procurement teams, evaluation committees, contractors, consultants, infrastructure owners, auditors, and institutional procurement organizations.
 
 ## Architecture
-Human Reviewer → Agent Planner → MCP Client → BidBox MCP Server → Compliance Matrix → Risk Summary → Draft Evidence Pack → Human Approval Gate.
+
+```
+Human Reviewer
+      ↓
+Agent Planner
+      ↓
+MCP Client
+      ↓
+BidBox MCP Server
+      ↓
+Compliance Matrix
+      ↓
+Risk Summary
+      ↓
+Draft Evidence Pack
+      ↓
+Human Approval Gate
+```
 
 See `ARCHITECTURE.md` and `docs/architecture.svg.png`.
 
-## Agent architecture
-The bounded Python agent executes a multi-step review workflow. An optional open-weights planning path can use a local Ollama-compatible Qwen2.5 model. Tool results become state for subsequent steps and are recorded in an audit log.
+## MCP tools
 
-## MCP implementation
-The repository implements Model Context Protocol (MCP) JSON-RPC over stdio between the agent client and the challenge-specific BidBox server. The server exposes four bounded tools:
+The challenge-specific server exposes four bounded tools:
+
 - `load_tender`
 - `build_compliance_matrix`
 - `summarize_risks`
 - `prepare_draft_pack`
 
-## MCP tools / servers
-`bidbox/server.py` is the BidBox MCP server. `bidbox/agent.py` is the client/orchestrator. The public demo accepts only `SYN-*` tender IDs.
+`bidbox/server.py` is the MCP server. `bidbox/agent.py` is the client/orchestrator. The public demo accepts only `SYN-*` tender IDs.
 
-## Human-in-the-loop workflow
-`FINALIZE_EVALUATION` is blocked by default. The generated pack records `required: true`, `approved: false`, and `blocked_action: FINALIZE_EVALUATION`. Human reviewers remain accountable for procurement decisions.
+## Human approval boundary
 
-## Setup / installation
+`FINALIZE_EVALUATION` is blocked by default. Generated packs record:
+
+- `required: true`
+- `approved: false`
+- `blocked_action: FINALIZE_EVALUATION`
+
+Human reviewers remain accountable for procurement decisions.
+
+## Setup
+
 Requires Python 3.10+ for the default demo. No third-party packages are required.
 
 ```bash
@@ -43,30 +92,42 @@ cd ibramind-bidbox-agent
 
 Optional open-weights planning mode expects a local Ollama-compatible endpoint and model.
 
-## Usage
-Run `./run_demo.sh`. The script executes the evaluation tests and then generates `outputs/evaluation_pack.json`.
-
-## Technology stack
-Python · MCP JSON-RPC stdio tools · synthetic JSON data · unittest · GitHub Pages · optional Ollama/Qwen2.5.
-
 ## Technical evidence
-`tests/test_demo.py` contains nine evaluation cases: eight passing checks and one intentional expected failure showing that missing mandatory bid-security evidence is surfaced rather than fabricated.
 
-## Limitations
-The public challenge demo uses a small synthetic fixture and does not connect to live procurement systems, supplier databases or live tender decisions. It is not a substitute for legal, procurement or engineering judgment.
-
-## Future improvements
-Add authenticated institutional connectors, document parsing for open tender PDFs/BOQs, richer evidence provenance, multilingual extraction, benchmark datasets, and stronger open-weights planning/evaluation while preserving the same approval boundary.
-
-## Safety
-- Synthetic/open challenge data only.
-- No personal supplier data in the public fixture.
-- No autonomous award decision.
-- Every tool result is recorded in the generated audit log.
-- Human approval is mandatory for finalization.
+`tests/test_demo.py` contains evaluation cases including an intentional expected failure showing that missing mandatory bid-security evidence is surfaced rather than fabricated.
 
 ## Live demo
-GitHub Pages demo: https://mohamedwoli5188-netizen.github.io/ibramind-bidbox-agent/
 
-## Repository
-https://github.com/mohamedwoli5188-netizen/ibramind-bidbox-agent
+https://mohamedwoli5188-netizen.github.io/ibramind-bidbox-agent/
+
+## Public/private boundary
+
+Public here:
+- Challenge-specific bounded agent
+- Synthetic/open fixture data
+- Public architecture/demo artifacts
+- Reproducible evaluation evidence
+
+Kept private:
+- Live procurement/customer data
+- Production IBRAMIND platform
+- Proprietary enterprise workflows and integrations
+- Production credentials and infrastructure
+- Founder/owner control-plane logic
+- Commercial deployment configuration
+
+## Limitations
+
+This public challenge demo uses a small synthetic fixture and does not connect to live procurement systems, supplier databases, or live tender decisions. It is not a substitute for legal, procurement, engineering, or evaluation-committee judgment.
+
+## Security
+
+See [SECURITY.md](SECURITY.md). Do not report credentials, vulnerabilities, or sensitive procurement information in public issues.
+
+## License and brand
+
+Prototype source code is licensed under the [MIT License](LICENSE). IBRAMIND names, logos, trademarks, private platform code, customer data, and commercial services are not granted by that license. See [TRADEMARK.md](TRADEMARK.md).
+
+---
+
+Built by **IBRAMIND Engineering Intelligence** — connected engineering, commercial, procurement, and project intelligence.
