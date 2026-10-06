@@ -2,6 +2,19 @@
 
 **Auditable tender-compliance intelligence with a mandatory human approval boundary.**
 
+## Explore IBRAMIND
+
+BidBox is one public proof inside the wider IBRAMIND Engineering Intelligence portfolio.
+
+- **Engineering Core:** QTO / BOQ + Digital Thread
+- **Project Intelligence:** Truth + Evidence + Impact + Memory + Scenarios
+- **InfraRisk:** infrastructure risk intelligence
+- **BidBox:** tender and procurement intelligence
+
+Public portfolio hub: https://github.com/mohamedwoli5188-netizen/ibramind-infrarisk-ai/blob/main/PUBLIC_PORTFOLIO.md
+
+InfraRisk repository: https://github.com/mohamedwoli5188-netizen/ibramind-infrarisk-ai
+
 IBRAMIND BidBox Agent is a public challenge-specific prototype for the African Agentic AI Design Challenge. It converts synthetic/open tender requirements and evidence into an auditable compliance working file while preserving provenance and blocking finalization until a human reviewer approves it.
 
 > This repository is a public technical showcase of one bounded IBRAMIND capability. It does not contain the private IBRAMIND production platform, customer procurement data, Customer OMNI, Founder OMNI, production credentials, proprietary enterprise workflows, or live tender decisions.
