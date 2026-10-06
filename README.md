@@ -33,6 +33,15 @@ The public repo is the demonstrator. IBRAMIND can provide paid pilots and enterp
 
 See [COMMERCIAL.md](COMMERCIAL.md) for the commercial boundary.
 
+## Commercial use / paid pilots
+
+This public repository is a technical demonstrator. IBRAMIND offers paid pilots and enterprise deployments for tender review, compliance matrices, BOQ/document extraction, procurement evidence, auditability, integrations, and governed agent workflows.
+
+**Request a paid pilot:** https://ibramind.com  
+**Founder / partnership contact:** founder@ibramind.com
+
+The private IBRAMIND production platform, customer procurement data, proprietary enterprise workflows, production credentials, and live tender decisions are not included here.
+
 ## Target users
 
 Public-procurement teams, evaluation committees, contractors, consultants, infrastructure owners, auditors, and institutional procurement organizations.
