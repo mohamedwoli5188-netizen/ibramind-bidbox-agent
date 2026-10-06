@@ -4,7 +4,37 @@
 
 IBRAMIND BidBox Agent is a public challenge-specific prototype for the African Agentic AI Design Challenge. It converts synthetic/open tender requirements and evidence into an auditable compliance working file while preserving provenance and blocking finalization until a human reviewer approves it.
 
-> This repository is a public technical showcase. It does not contain the private IBRAMIND production platform, customer procurement data, production credentials, proprietary enterprise workflows, or live tender decisions.
+> This repository is a public technical showcase of one bounded IBRAMIND capability. It does not contain the private IBRAMIND production platform, customer procurement data, Customer OMNI, Founder OMNI, production credentials, proprietary enterprise workflows, or live tender decisions.
+
+## IBRAMIND Engineering Intelligence
+
+IBRAMIND is being built as a connected engineering intelligence operating system for infrastructure delivery.
+
+The private platform spans engineering, BIM, quantity and commercial workflows, project controls, field intelligence, documents, procurement, risk, governance, and enterprise control. Its North-Star architecture connects these domains through governed project truth, evidence, relationships, impact analysis, memory, scenarios, and digital-twin views.
+
+A simplified public capability map is:
+
+```
+Drawings / BIM / Documents
+          ↓
+Engineering Graph / Digital Thread
+          ↓
+QTO → BOQ → Measurement → IPC
+          ↓
+Variation / Claim / Procurement / Cost
+          ↓
+Commercial & Project Intelligence
+          ↓
+Evidence → Truth State → Change Impact
+          ↓
+Connected Search → Engineering Memory → Scenarios
+          ↓
+Human Review / Governed Action
+```
+
+This repository demonstrates the **tender/procurement-intelligence** part of that wider architecture without publishing the private production implementation.
+
+See [IBRAMIND_PLATFORM.md](IBRAMIND_PLATFORM.md) for the safe public architecture overview.
 
 ## Problem
 
@@ -26,21 +56,12 @@ The prototype **does not award a tender or choose a bidder**.
 
 ## Commercial use / paid pilots
 
-The public repo is the demonstrator. IBRAMIND can provide paid pilots and enterprise deployments for tender review, compliance matrices, BOQ/document extraction, procurement evidence, auditability, integrations, and governed agent workflows.
+The public repository is the demonstrator. IBRAMIND can provide paid pilots and enterprise deployments for tender review, compliance matrices, BOQ/document extraction, procurement evidence, auditability, integrations, and governed agent workflows.
 
 **Request a paid pilot:** https://ibramind.com  
 **Founder / partnership contact:** founder@ibramind.com
 
 See [COMMERCIAL.md](COMMERCIAL.md) for the commercial boundary.
-
-## Commercial use / paid pilots
-
-This public repository is a technical demonstrator. IBRAMIND offers paid pilots and enterprise deployments for tender review, compliance matrices, BOQ/document extraction, procurement evidence, auditability, integrations, and governed agent workflows.
-
-**Request a paid pilot:** https://ibramind.com  
-**Founder / partnership contact:** founder@ibramind.com
-
-The private IBRAMIND production platform, customer procurement data, proprietary enterprise workflows, production credentials, and live tender decisions are not included here.
 
 ## 30-second demo
 
@@ -141,14 +162,15 @@ Public here:
 - Synthetic/open fixture data
 - Public architecture/demo artifacts
 - Reproducible evaluation evidence
+- Safe public description of the wider IBRAMIND architecture
 
 Kept private:
 - Live procurement/customer data
 - Production IBRAMIND platform
+- Customer OMNI and Founder OMNI implementation
+- Project Truth, Digital Thread, Evidence Passport, Engineering Memory, Scenario Engine and Digital Twin production internals
 - Proprietary enterprise workflows and integrations
-- Production credentials and infrastructure
-- Founder/owner control-plane logic
-- Commercial deployment configuration
+- Production credentials, infrastructure and commercial deployment configuration
 
 ## Limitations
 
@@ -164,4 +186,4 @@ Prototype source code is licensed under the [MIT License](LICENSE). IBRAMIND nam
 
 ---
 
-Built by **IBRAMIND Engineering Intelligence** — connected engineering, commercial, procurement, and project intelligence.
+Built by **IBRAMIND Engineering Intelligence** — connected, governed engineering, commercial, procurement, and project intelligence.
