@@ -1,0 +1,16 @@
+{
+  "tender_id": "SYN-AFR-001",
+  "title": "Synthetic Public Works Tender - Community Facility",
+  "notice": "Synthetic/open challenge data only. No live procurement data.",
+  "requirements": [
+    {"id": "R1", "text": "Bid security must be submitted.", "mandatory": true},
+    {"id": "R2", "text": "Valid contractor registration must be provided.", "mandatory": true},
+    {"id": "R3", "text": "Construction methodology must address quality and HSE.", "mandatory": true},
+    {"id": "R4", "text": "Similar-project experience must be evidenced.", "mandatory": false}
+  ],
+  "supplier_evidence": [
+    {"id": "E1", "title": "Contractor registration", "supports": ["R2"], "source": "synthetic/registration.pdf"},
+    {"id": "E2", "title": "Method statement", "supports": ["R3"], "source": "synthetic/methodology.pdf"},
+    {"id": "E3", "title": "Completion certificate", "supports": ["R4"], "source": "synthetic/experience.pdf"}
+  ]
+}
