@@ -1,56 +1,95 @@
 from __future__ import annotations
 import argparse
-import asyncio
 import json
 import os
+import subprocess
+import urllib.request
 from pathlib import Path
-import httpx
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
 
-TOOL_SEQUENCE = ["load_tender", "build_compliance_matrix", "summarize_risks", "prepare_draft_pack"]
+TOOLS = ["load_tender", "build_compliance_matrix", "summarize_risks", "prepare_draft_pack"]
 
-async def model_plan(task: str) -> dict:
-    """Use an open-weights model through local Ollama when available."""
+def open_weights_plan(task):
     url = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/chat")
     model = os.getenv("OLLAMA_MODEL", "qwen2.5:0.5b")
     prompt = (
-        "You are planning a public-procurement evidence review. Never award a bidder. "
-        "Return JSON with keys objective and ordered_tools. Only use these tools: "
-        + ", ".join(TOOL_SEQUENCE) + ". Task: " + task
+        "Plan a public-procurement evidence review. Never award a bidder. "
+        "Return JSON with objective and ordered_tools. Allowed tools: "
+        + ", ".join(TOOLS) + ". Task: " + task
     )
-    async with httpx.AsyncClient(timeout=45) as client:
-        r = await client.post(url, json={
-            "model": model,
-            "stream": False,
-            "format": "json",
-            "messages": [{"role": "user", "content": prompt}],
-        })
-        r.raise_for_status()
-        return json.loads(r.json()["message"]["content"])
+    body = json.dumps({
+        "model": model,
+        "stream": False,
+        "format": "json",
+        "messages": [{"role": "user", "content": prompt}]
+    }).encode()
+    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        response = json.loads(r.read().decode())
+    return json.loads(response["message"]["content"])
 
-async def run(input_path: str, output_path: str, use_model: bool) -> dict:
+class MCPClient:
+    def __init__(self):
+        self.proc = subprocess.Popen(
+            ["python3", "-m", "bidbox.server"],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+            text=True, bufsize=1
+        )
+        self.next_id = 1
+        self.request("initialize", {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {},
+            "clientInfo": {"name": "bidbox-agent", "version": "0.1.0"}
+        })
+        self.notify("notifications/initialized", {})
+
+    def request(self, method, params):
+        mid = self.next_id
+        self.next_id += 1
+        msg = {"jsonrpc": "2.0", "id": mid, "method": method, "params": params}
+        self.proc.stdin.write(json.dumps(msg) + "\n")
+        self.proc.stdin.flush()
+        reply = json.loads(self.proc.stdout.readline())
+        if "error" in reply:
+            raise RuntimeError(reply["error"]["message"])
+        return reply["result"]
+
+    def notify(self, method, params):
+        self.proc.stdin.write(json.dumps(
+            {"jsonrpc": "2.0", "method": method, "params": params}
+        ) + "\n")
+        self.proc.stdin.flush()
+
+    def call_tool(self, name, arguments):
+        result = self.request("tools/call", {"name": name, "arguments": arguments})
+        return json.loads(result["content"][0]["text"])
+
+    def close(self):
+        self.proc.terminate()
+
+def run(input_path, output_path, use_model=False):
     log = []
-    plan = {"objective": "prepare a cited tender evaluation working file", "ordered_tools": TOOL_SEQUENCE}
+    plan = {"objective": "prepare a cited tender evaluation working file", "ordered_tools": TOOLS}
     if use_model:
-        plan = await model_plan("Review the synthetic tender package and prepare a human-review draft.")
+        plan = open_weights_plan("Review the synthetic tender and prepare a human-review draft.")
         log.append({"event": "open_weights_model_plan", "plan": plan})
 
-    server = StdioServerParameters(command="python3", args=["-m", "bidbox.server"])
-    async with stdio_client(server) as (read, write):
-        async with ClientSession(read, write) as session:
-            await session.initialize()
+    client = MCPClient()
+    try:
+        def call(name, arguments):
+            value = client.call_tool(name, arguments)
+            snapshot = json.loads(json.dumps(value))
+            log.append({"event": "mcp_tool_call", "tool": name,
+                        "arguments": arguments, "result": snapshot})
+            return value
 
-            async def call(name, args):
-                res = await session.call_tool(name, args)
-                payload = json.loads(res.content[0].text)
-                log.append({"event": "mcp_tool_call", "tool": name, "args": args, "result": payload})
-                return payload
-
-            tender = await call("load_tender", {"path": str(Path(input_path).resolve())})
-            matrix = await call("build_compliance_matrix", {"tender": tender})
-            risk = await call("summarize_risks", {"matrix": matrix})
-            pack = await call("prepare_draft_pack", {"tender": tender, "matrix": matrix, "risk": risk})
+        tender = call("load_tender", {"path": str(Path(input_path).resolve())})
+        matrix = call("build_compliance_matrix", {"tender": tender})
+        risk = call("summarize_risks", {"matrix": matrix})
+        pack = call("prepare_draft_pack", {
+            "tender": tender, "matrix": matrix, "risk": risk
+        })
+    finally:
+        client.close()
 
     pack["agent_plan"] = plan
     pack["audit_log"] = log
@@ -67,9 +106,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", default="data/synthetic_tender.json")
     ap.add_argument("--output", default="outputs/evaluation_pack.json")
-    ap.add_argument("--model", action="store_true", help="Plan with local open-weights Ollama model.")
+    ap.add_argument("--model", action="store_true")
     a = ap.parse_args()
-    pack = asyncio.run(run(a.input, a.output, a.model))
+    pack = run(a.input, a.output, a.model)
     print(json.dumps({
         "tender_id": pack["tender_id"],
         "risk": pack["risk_summary"],

@@ -1,2 +1,2 @@
-mcp>=1.12,<2
-httpx>=0.27,<1
+# No third-party Python packages are required for the default demo.
+# Optional open-weights mode expects a local Ollama-compatible endpoint.

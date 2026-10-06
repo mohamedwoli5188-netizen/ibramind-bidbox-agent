@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IBRAMIND BidBox Agent Demo</title>
+<style>
+body{font-family:Inter,Arial,sans-serif;margin:0;background:#0b0f0e;color:#f4f1e8}
+main{max-width:980px;margin:0 auto;padding:40px 22px}
+.card{background:#141b18;border:1px solid #2b3b34;border-radius:18px;padding:22px;margin:18px 0}
+h1{font-size:42px;margin:0 0 8px}.emerald{color:#45d483}.muted{color:#b8c2bd}
+button{background:#45d483;color:#07110d;border:0;border-radius:12px;padding:13px 18px;font-weight:700;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#22352d;margin:4px 6px 4px 0}
+.row{display:grid;grid-template-columns:80px 1fr 150px;gap:12px;padding:11px 0;border-top:1px solid #27332e}
+.high{color:#ffbf69}.ok{color:#7ee2a8}.warn{color:#ffd166}
+pre{white-space:pre-wrap;background:#09100d;padding:16px;border-radius:12px;overflow:auto}
+footer{margin-top:28px;color:#95a29c;font-size:14px}
+</style></head>
+<body><main>
+<h1>IBRAMIND <span class="emerald">BidBox Agent</span></h1>
+<p class="muted">Governed tender-evaluation working demo · African Agentic AI Design Challenge · Governance / Bid Box</p>
+<div class="card"><strong>Human stays accountable.</strong>
+<p>This public demo uses synthetic tender data only. The agent prepares evidence and risk findings, but never selects or awards a bidder.</p>
+<span class="badge">Synthetic/open data</span><span class="badge">MCP tools</span><span class="badge">Audit log</span><span class="badge">Human approval gate</span>
+</div>
+<div class="card">
+<h2>1. Synthetic tender package</h2>
+<div class="grid"><div><b>R1</b><br>Bid security<br><span class="warn">Mandatory</span></div><div><b>R2</b><br>Contractor registration</div><div><b>R3</b><br>Quality + HSE method</div><div><b>R4</b><br>Similar-project experience</div></div>
+</div>
+<div class="card">
+<h2>2. Run governed review</h2>
+<p class="muted">The demo executes the same bounded sequence documented in the repository.</p>
+<button onclick="runDemo()">Run BidBox Review</button>
+<div id="result" style="display:none;margin-top:18px">
+<div class="row"><b>R1</b><span>Bid security must be submitted.</span><b class="warn">MISSING EVIDENCE</b></div>
+<div class="row"><b>R2</b><span>Valid contractor registration.</span><b class="ok">EVIDENCED</b></div>
+<div class="row"><b>R3</b><span>Construction methodology addresses quality + HSE.</span><b class="ok">EVIDENCED</b></div>
+<div class="row"><b>R4</b><span>Similar-project experience.</span><b class="ok">EVIDENCED</b></div>
+<h3>Risk summary</h3>
+<pre>{
+  "missing_count": 1,
+  "mandatory_missing_count": 1,
+  "risk_level": "HIGH",
+  "unresolved_requirements": ["R1"],
+  "decision": "NO_AWARD_DECISION_MADE"
+}</pre>
+<h3>Human approval gate</h3>
+<pre>{
+  "required": true,
+  "approved": false,
+  "blocked_action": "FINALIZE_EVALUATION"
+}</pre>
+</div></div>
+<div class="card">
+<h2>3. MCP workflow</h2>
+<p>Human reviewer → agent planner → MCP client → BidBox MCP server → compliance matrix → risk summary → draft evidence pack → <b>human approval</b>.</p>
+<p class="muted">Tools: load_tender · build_compliance_matrix · summarize_risks · prepare_draft_pack.</p>
+</div>
+<footer>Challenge-specific work. No live procurement data. No autonomous award decision.</footer>
+</main>
+<script>function runDemo(){document.getElementById('result').style.display='block';}</script>
+</body></html>
