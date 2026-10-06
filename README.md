@@ -36,6 +36,14 @@ This repository demonstrates the **tender/procurement-intelligence** part of tha
 
 See [IBRAMIND_PLATFORM.md](IBRAMIND_PLATFORM.md) for the safe public architecture overview.
 
+## IBRAMIND public portfolio
+
+BidBox is one bounded public showcase inside the wider IBRAMIND Engineering Intelligence portfolio.
+
+The public portfolio also includes engineering-core QTO/BOQ + Digital Thread and Project Intelligence demonstrations in the InfraRisk showcase repository.
+
+Public portfolio hub: https://github.com/mohamedwoli5188-netizen/ibramind-infrarisk-ai/blob/main/PUBLIC_PORTFOLIO.md
+
 ## Problem
 
 Procurement and engineering teams often review tender requirements, BOQs, supplier evidence, and technical schedules across disconnected files. Mandatory requirements can be missed, provenance can be difficult to trace, and evaluation working files can become inconsistent.
