@@ -20,7 +20,7 @@ See `ARCHITECTURE.md` and `docs/architecture.svg.png`.
 The bounded Python agent executes a multi-step review workflow. An optional open-weights planning path can use a local Ollama-compatible Qwen2.5 model. Tool results become state for subsequent steps and are recorded in an audit log.
 
 ## MCP implementation
-The repository implements MCP-style JSON-RPC over stdio between the agent client and the challenge-specific BidBox server. The server exposes four bounded tools:
+The repository implements Model Context Protocol (MCP) JSON-RPC over stdio between the agent client and the challenge-specific BidBox server. The server exposes four bounded tools:
 - `load_tender`
 - `build_compliance_matrix`
 - `summarize_risks`
@@ -47,7 +47,7 @@ Optional open-weights planning mode expects a local Ollama-compatible endpoint a
 Run `./run_demo.sh`. The script executes the evaluation tests and then generates `outputs/evaluation_pack.json`.
 
 ## Technology stack
-Python · JSON-RPC/MCP-style stdio tools · synthetic JSON data · unittest · GitHub Pages · optional Ollama/Qwen2.5.
+Python · MCP JSON-RPC stdio tools · synthetic JSON data · unittest · GitHub Pages · optional Ollama/Qwen2.5.
 
 ## Technical evidence
 `tests/test_demo.py` contains nine evaluation cases: eight passing checks and one intentional expected failure showing that missing mandatory bid-security evidence is surfaced rather than fabricated.
