@@ -61,6 +61,8 @@ class MCPClient:
 
     def call_tool(self, name, arguments):
         result = self.request("tools/call", {"name": name, "arguments": arguments})
+        if result.get("isError"):
+            raise RuntimeError(result["content"][0]["text"])
         return json.loads(result["content"][0]["text"])
 
     def close(self):
