@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="IBRAMIND BidBox: an auditable synthetic tender compliance demonstration with evidence provenance, MCP tools and mandatory human approval.">
 <title>IBRAMIND BidBox Agent Demo</title>
 <style>
 body{font-family:Inter,Arial,sans-serif;margin:0;background:#0b0f0e;color:#f4f1e8}
@@ -15,10 +15,18 @@ button{background:#45d483;color:#07110d;border:0;border-radius:12px;padding:13px
 .high{color:#ffbf69}.ok{color:#7ee2a8}.warn{color:#ffd166}
 pre{white-space:pre-wrap;background:#09100d;padding:16px;border-radius:12px;overflow:auto}
 footer{margin-top:28px;color:#95a29c;font-size:14px}
+a{color:#7ee2a8}a:focus-visible,button:focus-visible{outline:3px solid #ffd166;outline-offset:4px}
+button:hover{background:#73e5a3}button:active{transform:translateY(1px)}
+.header-links{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.header-links a{display:inline-block;border:1px solid #365444;padding:9px 13px;border-radius:10px;text-decoration:none;font-weight:700}
+.kicker{text-transform:uppercase;letter-spacing:.13em;color:#7ee2a8;font-size:12px}
+@media(max-width:620px){main{padding:24px 14px}h1{font-size:32px}.row{grid-template-columns:48px 1fr}.row b:last-child{grid-column:2}button{width:100%;min-height:48px}}
+@media(prefers-reduced-motion:reduce){button:active{transform:none}}
 </style></head>
 <body><main>
-<h1>IBRAMIND <span class="emerald">BidBox Agent</span></h1>
+<p class="kicker">IBRAMIND · Engineering Intelligence</p><h1>IBRAMIND <span class="emerald">BidBox Agent</span></h1>
 <p class="muted">Governed tender-evaluation working demo · African Agentic AI Design Challenge · Governance / Bid Box</p>
+<nav class="header-links" aria-label="Project resources"><a href="https://github.com/mohamedwoli5188-netizen/ibramind-bidbox-agent">Source &amp; instructions ↗</a><a href="https://glama.ai/mcp/servers/mohamedwoli5188-netizen/ibramind-bidbox-agent">Glama listing ↗</a><a href="https://ibramind.com">IBRAMIND website ↗</a></nav>
 <div class="card"><strong>Human stays accountable.</strong>
 <p>This public demo uses synthetic tender data only. The agent prepares evidence and risk findings, but never selects or awards a bidder.</p>
 <span class="badge">Synthetic/open data</span><span class="badge">MCP tools</span><span class="badge">Audit log</span><span class="badge">Human approval gate</span>
@@ -30,8 +38,8 @@ footer{margin-top:28px;color:#95a29c;font-size:14px}
 <div class="card">
 <h2>2. Run governed review</h2>
 <p class="muted">This interactive illustration reveals a precomputed synthetic result. It does not execute the Python MCP server in your browser. For executable MCP tools and regression tests, use the public repository.</p>
-<button onclick="runDemo()">View Synthetic Review Result</button>
-<div id="result" style="display:none;margin-top:18px">
+<button id="review-button" type="button" aria-controls="result" aria-expanded="false" onclick="runDemo()">View Synthetic Review Result</button>
+<div id="result" hidden style="margin-top:18px" role="region" aria-label="Synthetic compliance review results">
 <div class="row"><b>R1</b><span>Bid security must be submitted.</span><b class="warn">MISSING EVIDENCE</b></div>
 <div class="row"><b>R2</b><span>Valid contractor registration.</span><b class="ok">EVIDENCED</b></div>
 <div class="row"><b>R3</b><span>Construction methodology addresses quality + HSE.</span><b class="ok">EVIDENCED</b></div>
@@ -58,5 +66,14 @@ footer{margin-top:28px;color:#95a29c;font-size:14px}
 </div>
 <div class="card"><h2>4. Run the executable MCP prototype</h2><p class="muted">The source repository contains the actual stdio MCP server, four bounded tools, synthetic fixtures, and security tests. The hosted website is a static preview—not a remote MCP endpoint.</p><p><a href="https://github.com/mohamedwoli5188-netizen/ibramind-bidbox-agent" style="color:#45d483;font-weight:700">Open source, setup instructions and tests ↗</a></p><p class="muted">Local demo: <code>./run_demo.sh</code> · MCP module: <code>python3 -m bidbox.server</code></p></div><footer>Challenge-specific work. Static illustration only. No live procurement data. No autonomous award decision.</footer>
 </main>
-<script>function runDemo(){document.getElementById('result').style.display='block';}</script>
+<script>
+function runDemo(){
+  const panel=document.getElementById('result');
+  const button=document.getElementById('review-button');
+  const expanded=button.getAttribute('aria-expanded')==='true';
+  panel.hidden=expanded;
+  button.setAttribute('aria-expanded',String(!expanded));
+  button.textContent=expanded?'View Synthetic Review Result':'Hide Synthetic Review Result';
+}
+</script>
 </body></html>
