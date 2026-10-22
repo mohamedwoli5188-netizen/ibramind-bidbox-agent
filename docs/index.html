@@ -29,8 +29,8 @@ footer{margin-top:28px;color:#95a29c;font-size:14px}
 </div>
 <div class="card">
 <h2>2. Run governed review</h2>
-<p class="muted">The demo executes the same bounded sequence documented in the repository.</p>
-<button onclick="runDemo()">Run BidBox Review</button>
+<p class="muted">This interactive illustration reveals a precomputed synthetic result. It does not execute the Python MCP server in your browser. For executable MCP tools and regression tests, use the public repository.</p>
+<button onclick="runDemo()">View Synthetic Review Result</button>
 <div id="result" style="display:none;margin-top:18px">
 <div class="row"><b>R1</b><span>Bid security must be submitted.</span><b class="warn">MISSING EVIDENCE</b></div>
 <div class="row"><b>R2</b><span>Valid contractor registration.</span><b class="ok">EVIDENCED</b></div>
@@ -56,7 +56,7 @@ footer{margin-top:28px;color:#95a29c;font-size:14px}
 <p>Human reviewer → agent planner → MCP client → BidBox MCP server → compliance matrix → risk summary → draft evidence pack → <b>human approval</b>.</p>
 <p class="muted">Tools: load_tender · build_compliance_matrix · summarize_risks · prepare_draft_pack.</p>
 </div>
-<footer>Challenge-specific work. No live procurement data. No autonomous award decision.</footer>
+<div class="card"><h2>4. Run the executable MCP prototype</h2><p class="muted">The source repository contains the actual stdio MCP server, four bounded tools, synthetic fixtures, and security tests. The hosted website is a static preview—not a remote MCP endpoint.</p><p><a href="https://github.com/mohamedwoli5188-netizen/ibramind-bidbox-agent" style="color:#45d483;font-weight:700">Open source, setup instructions and tests ↗</a></p><p class="muted">Local demo: <code>./run_demo.sh</code> · MCP module: <code>python3 -m bidbox.server</code></p></div><footer>Challenge-specific work. Static illustration only. No live procurement data. No autonomous award decision.</footer>
 </main>
 <script>function runDemo(){document.getElementById('result').style.display='block';}</script>
 </body></html>
